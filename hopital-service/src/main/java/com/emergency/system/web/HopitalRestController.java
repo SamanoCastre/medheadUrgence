@@ -49,13 +49,13 @@ public class HopitalRestController {
 	private SequenceGeneratorService sequenceGeneratorService;
 	
 	@GetMapping("/hopital")
-	public Hopital rechercherHopital(RechercheRequestDTO request) {
+	public Hopital rechercherHopital(@RequestParam("lieuIncident") String lieuIncident, @RequestParam("specialite") int specialite) {
 		Hopital hopital = null;
 		try {
-			if(!request.valid()) {
-				throw new Exception("RechercheRequest DTO invalid");
+			if(lieuIncident == null || specialite <=0) {
+				throw new Exception("Le lieu de l'incident ainsi que la spécialité est requis pour éffectuer la recherche");
 			}
-			hopital = this.hopitalService.rechercherHopital(request.getLieuIncident(), request.getSpecialite());
+			hopital = this.hopitalService.rechercherHopital(lieuIncident, specialite);
 		}
 		catch(Exception e) {
 			this.logger.error(e.getMessage());

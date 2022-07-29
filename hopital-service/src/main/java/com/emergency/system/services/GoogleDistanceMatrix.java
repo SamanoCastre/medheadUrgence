@@ -22,8 +22,9 @@ public class GoogleDistanceMatrix implements IGoogleDistanceMatrix {
     
     public GoogleDistanceMatrixApiResponse compute(String addressFrom, String addressTo) {
     	try {
+    		RestTemplate restTemplate = new RestTemplate();
 	    	UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(DISTANCE_MATRIX_URI).queryParam("key",API_KEY).queryParam("origins", addressFrom).queryParam("destinations", addressTo);
-	    	RestTemplate restTemplate = new RestTemplate();
+	    	
 	    	return  restTemplate.getForObject(builder.toUriString(), GoogleDistanceMatrixApiResponse.class);
     	}
     	catch(Exception e) {

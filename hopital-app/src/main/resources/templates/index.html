@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template">
+	<head>
+		<meta charset="utf-8"/>
+		<title>Votre hopital</title>
+	</head>
+	<body>
+		<div layout:fragment="content">
+		    <div class="col-md-6">
+		    	<div class="panel panel-primary">
+		    		<div class="panel-heading">Rechercher l'hopital le plus proche</div>
+		    		<div class="panel-body">
+						    <!-- Error Alert -->
+						    <div class="alert alert-danger" th:if="${searchError}">
+						    	Une erreur s'est produite. Le lieu d'incident doit être reseigné comme suit. Exemple : 31509 Toulouse
+						    </div>
+		    			
+		    			<form th:action="@{/rechercherHopital}" method="post">
+		    				<div class="form-group">
+		    					<label> Lieu incident :</label>
+		    					<input type="text" name="lieuIncident" th:value="${lieuIncident}" placeHolder="Ex: 31509 Toulouse"/>
+		    				</div>
+		    				<div class="form-group">
+		    					<label>Spécialité :</label>
+		    					
+							      <select class="selectpicker" name="id" data-show-subtext="true" data-live-search="true">
+							          <option th:each="sp:${specialites}" th:data-subtext="${sp.groupe}" th:value="${sp.id}" th:text="${sp.name}"></option>
+							      </select>
+		    				</div>
+		    				<div>
+		    					<button type="submit" class="btn btn-primary">Lancer la recherche</button>
+		    				</div>
+		    				
+		    			</form>
+		    			<div class="text-danger" th:if="${exception}" th:text="${exception.message}"></div>
+		    		</div>
+		    	</div>
+		    	<div class="panel panel-primary" th:if="${hopital}">
+		    		<div class="panel-heading">Hopital le plus proche trouvé</div>
+		    		<div class="panel-body">
+		    		<!-- Success Alert -->
+						    <div class="alert alert-success" th:if="${reservationSuccess}">
+						            Votre demande de réservation a été enregistrée. Merci
+						    </div>
+						    <div class="alert alert-error" th:if="${reservationError}">
+						            Une erreur s'est produite lors de l'enregistrement de la réservation.
+						    </div>
+		    		<div>
+		    			  <label>Nom : </label>
+		    			  <label th:text="${hopital.name}"></label>
+		    			</div>
+		    			<div>
+		    			  <label>Addresse : </label>
+		    			  <address >
+		    			       <ul>
+		    			       		<li><span th:text="${hopital.address.numero} "></span> <span th:text="${hopital.address.rue}"></span></li>
+		    			       		<li><span th:text="${hopital.address.codePostal}"></span> <span th:text="${hopital.address.ville}"></span></li>
+		    			       		<li th:text="${hopital.address.pays}"></li>
+		    			       </ul>
+		    			  </address>
+		    			</div>
+		    			<div>
+		    				<a th:href="@{/reserver/?hopital={hopital.id}&specialite={specialite_id}}"  class="btn btn-primary">Réserver cet hopital</a>
+		    			</div>
+		    		</div>
+		    	</div>
+		    	
+		    	<div class="panel panel-primary" th:if="${reservations}">
+		    		<div class="panel-heading">Liste réservations</div>
+		    		<div class="panel-body">
+		    			<table class="table table-stripped">
+		    				<tr>
+		    					<th>Hopital </th>
+		    					<th>Spécialité</th>
+		    					<th>Date réservation </th>
+		    					<th>Intervenant</th>
+		    				</tr>
+		    				<tr th:each="r:${listReservations}">
+		    					<td th:text="${r.hopital}"></td>
+		    					<td th:text="${r.specialite}"></td>
+		    					<td th:text="${r.dateCreation}"></td>
+		    					<td th:text="${r.intervenant}"></td>
+		    				</tr>
+		    			</table>
+		    		</div>
+		    	</div>
+		    </div>
+		</div>
+	</body>
+</html>
