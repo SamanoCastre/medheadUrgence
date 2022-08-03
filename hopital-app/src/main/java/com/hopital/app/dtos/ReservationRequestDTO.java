@@ -1,11 +1,11 @@
 package com.hopital.app.dtos;
 
-public class ReservationDTO {
+public class ReservationRequestDTO {
 	private int hopital_id;
 	private int specialite_id;
 	private String intervenant;
 	
-	public ReservationDTO(int hopital_id, int specialite_id, String intervenant) {
+	public ReservationRequestDTO(int hopital_id, int specialite_id, String intervenant) {
 		super();
 		this.hopital_id = hopital_id;
 		this.specialite_id = specialite_id;
@@ -36,7 +36,7 @@ public class ReservationDTO {
 	}
 	
 	public boolean valid() {
-		return this.hopital_id <=0 || this.specialite_id <=0 || this.intervenant == null;
+		return this.hopital_id > 0 && this.specialite_id > 0 || this.intervenant != null;
 	}
 	
 }

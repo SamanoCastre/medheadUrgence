@@ -6,6 +6,4 @@ public interface IGoogleDistanceMatrix {
 	
 	public GoogleDistanceMatrixApiResponse compute(String addressFrom, String addressTo);
 	public long getDistance(GoogleDistanceMatrixApiResponse googleDistanceMatrixApiResponse) throws Exception;
-	
-
 }

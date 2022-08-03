@@ -1,4 +1,4 @@
-package com.emergency.system.services;
+package com.emergency.system.services.impl;
 
 import java.util.List;
 
@@ -8,22 +8,25 @@ import org.springframework.stereotype.Service;
 import com.emergency.system.entities.Disponibilite;
 import com.emergency.system.entities.GoogleDistanceMatrixApiResponse;
 import com.emergency.system.entities.Hopital;
-import com.emergency.system.repositories.DisponibiliteRepository;
+import com.emergency.system.services.IDisponibiliteService;
+import com.emergency.system.services.IGoogleDistanceMatrix;
+import com.emergency.system.services.IHopitalService;
 
 @Service
 public class HopitalServiceImpl implements IHopitalService{
 	
 	@Autowired
-	private DisponibiliteRepository disponibiliteRepository;
+	private IDisponibiliteService disponibiliteService;
 	
 	@Autowired
 	private IGoogleDistanceMatrix distanceService;
 	 
+	
 
 	@Override
 	public Hopital rechercherHopital(String lieu, int specialiteId) {
 		
-		List<Disponibilite> listDisponibilites = this.disponibiliteRepository.findBySpecialiteId(specialiteId);
+		List<Disponibilite> listDisponibilites = this.disponibiliteService.findBySpecialiteId(specialiteId);
 		
 		Hopital hopital = null;
 		long distance = -1;

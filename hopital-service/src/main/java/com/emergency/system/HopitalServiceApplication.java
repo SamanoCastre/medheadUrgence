@@ -5,6 +5,7 @@ import java.util.Date;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 
@@ -15,8 +16,9 @@ import com.emergency.system.entities.Specialite;
 import com.emergency.system.repositories.DisponibiliteRepository;
 import com.emergency.system.repositories.HopitalRepository;
 import com.emergency.system.repositories.SpecialiteRepository;
-import com.emergency.system.services.SequenceGeneratorService;
+import com.emergency.system.services.ISequenceGeneratorService;
 
+@EnableFeignClients
 @SpringBootApplication
 public class HopitalServiceApplication {
 

@@ -4,7 +4,7 @@
       layout:decorate="template">
 	<head>
 		<meta charset="utf-8"/>
-		<title>Votre hopital</title>
+		<title>Rechercher un hopital</title>
 	</head>
 	<body>
 		<div layout:fragment="content">
@@ -25,7 +25,7 @@
 		    				<div class="form-group">
 		    					<label>Spécialité :</label>
 		    					
-							      <select class="selectpicker" name="id" data-show-subtext="true" data-live-search="true">
+							      <select class="selectpicker" name="specialite" data-show-subtext="true" data-live-search="true">
 							          <option th:each="sp:${specialites}" th:data-subtext="${sp.groupe}" th:value="${sp.id}" th:text="${sp.name}"></option>
 							      </select>
 		    				</div>
@@ -34,19 +34,12 @@
 		    				</div>
 		    				
 		    			</form>
-		    			<div class="text-danger" th:if="${exception}" th:text="${exception.message}"></div>
 		    		</div>
 		    	</div>
 		    	<div class="panel panel-primary" th:if="${hopital}">
 		    		<div class="panel-heading">Hopital le plus proche trouvé</div>
 		    		<div class="panel-body">
-		    		<!-- Success Alert -->
-						    <div class="alert alert-success" th:if="${reservationSuccess}">
-						            Votre demande de réservation a été enregistrée. Merci
-						    </div>
-						    <div class="alert alert-error" th:if="${reservationError}">
-						            Une erreur s'est produite lors de l'enregistrement de la réservation.
-						    </div>
+		    		
 		    		<div>
 		    			  <label>Nom : </label>
 		    			  <label th:text="${hopital.name}"></label>
@@ -61,29 +54,30 @@
 		    			       </ul>
 		    			  </address>
 		    			</div>
-		    			<div>
-		    				<a th:href="@{/reserver/?hopital={hopital.id}&specialite={specialite_id}}"  class="btn btn-primary">Réserver cet hopital</a>
-		    			</div>
+		    			<form th:action="@{/reserverHopital}" method="post">
+		    				<div class="form-group">
+		    					<label> Intervenant :</label>
+		    					<input type="text" name="intervenant" th:value="${intervenant}" placeHolder="Saisir votre nom"/>
+		    					<input type="hidden" name="hopital_id" th:value="${hopital.id}"/>
+		    					<input type="hidden" name="specialite_id" th:value="${specialite_id}"/>
+		    				</div>
+			    			<div>
+			    			   <button type="submit" class="btn btn-primary" th:if="${reservation} == null">Réserver cet hopital</button>
+			    			</div>
+		    			</form>
 		    		</div>
 		    	</div>
 		    	
-		    	<div class="panel panel-primary" th:if="${reservations}">
-		    		<div class="panel-heading">Liste réservations</div>
+		    	<div class="panel panel-primary" th:if="${reservation}">
+		    		<div class="panel-heading">Réponse réservation</div>
 		    		<div class="panel-body">
-		    			<table class="table table-stripped">
-		    				<tr>
-		    					<th>Hopital </th>
-		    					<th>Spécialité</th>
-		    					<th>Date réservation </th>
-		    					<th>Intervenant</th>
-		    				</tr>
-		    				<tr th:each="r:${listReservations}">
-		    					<td th:text="${r.hopital}"></td>
-		    					<td th:text="${r.specialite}"></td>
-		    					<td th:text="${r.dateCreation}"></td>
-		    					<td th:text="${r.intervenant}"></td>
-		    				</tr>
-		    			</table>
+		    			<!-- Success Alert -->
+						    <div class="alert alert-success" th:if="${reservationSuccess}">
+						            Votre demande de réservation a bien été enregistrée. Merci
+						    </div>
+						    <div class="alert alert-error" th:if="${reservationError}">
+						            Une erreur s'est produite lors de l'enregistrement de la réservation.
+						    </div>
 		    		</div>
 		    	</div>
 		    </div>

@@ -1,4 +1,4 @@
-package com.emergency.system.services;
+package com.emergency.system.services.impl;
 
 import static org.springframework.data.mongodb.core.FindAndModifyOptions.options;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
@@ -9,12 +9,11 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Update;
-import org.springframework.stereotype.Service;
+
 import com.emergency.system.entities.DatabaseSequence;
+import com.emergency.system.services.ISequenceGeneratorService;
 
-
-@Service
-public class SequenceGeneratorService {
+public class SequenceGeneratorServiceImpl implements ISequenceGeneratorService{
 	
 	@Autowired
 	private MongoOperations mongoOperations;
@@ -27,5 +26,4 @@ public class SequenceGeneratorService {
         return !Objects.isNull(counter) ? counter.getSeq() : 1;
 
     }
-
 }

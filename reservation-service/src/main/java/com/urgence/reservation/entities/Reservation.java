@@ -18,10 +18,9 @@ public class Reservation {
 	private Date date_fin;
 	private String intervenant;
 	
-	public Reservation(int reservation_id, int hopital_id, int specialite_id,Date date_creation, Date date_annulation, 
+	public Reservation(int hopital_id, int specialite_id,Date date_creation, Date date_annulation, 
 			Date date_fin, String intervenant) {
-		super();
-		this.reservation_id = reservation_id;
+		
 		this.hopital_id = hopital_id;
 		this.specialite_id = specialite_id;
 		this.date_annulation = date_annulation;

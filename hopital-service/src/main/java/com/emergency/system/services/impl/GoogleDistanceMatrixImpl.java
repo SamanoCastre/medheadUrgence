@@ -1,13 +1,14 @@
-package com.emergency.system.services;
+package com.emergency.system.services.impl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.emergency.system.entities.GoogleDistanceMatrixApiResponse;
+import com.emergency.system.services.IGoogleDistanceMatrix;
 
 @Service
-public class GoogleDistanceMatrix implements IGoogleDistanceMatrix {
+public class GoogleDistanceMatrixImpl implements IGoogleDistanceMatrix {
 	
 	@Value("${API_KEY}")
     private String API_KEY;
@@ -16,7 +17,7 @@ public class GoogleDistanceMatrix implements IGoogleDistanceMatrix {
     private String DISTANCE_MATRIX_URI;
 	
 	
-    public GoogleDistanceMatrix() {
+    public GoogleDistanceMatrixImpl() {
 		
 	}
     
